@@ -1,0 +1,14 @@
+#!/bin/bash
+
+COMPOSE_PROVIDER="${COMPOSE_PROVIDER:-podman-compose}"
+
+SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+PROJECT_ROOT="$(realpath "$SCRIPT_DIR/..")"
+
+compose_arguments=(
+)
+
+cd ${PROJECT_ROOT}
+exec ${COMPOSE_PROVIDER} "${compose_arguments[@]}" run --rm --build client
+

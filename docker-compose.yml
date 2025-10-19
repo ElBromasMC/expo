@@ -1,0 +1,21 @@
+services:
+  client:
+    userns_mode: "keep-id:uid=1001,gid=1001"
+    restart: no
+    build:
+      context: ./src
+      dockerfile: ./Dockerfile
+    volumes:
+      - runner-home:/home/runner
+      - type: bind
+        source: ./src
+        target: /home/runner/src
+    environment:
+      - NANOBANANA_GEMINI_API_KEY=${NANOBANANA_GEMINI_API_KEY}
+
+volumes:
+  runner-home:
+
+x-podman:
+  in_pod: false
+
