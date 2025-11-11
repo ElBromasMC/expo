@@ -3,8 +3,6 @@
 Presentar el siguiente trabajo (ubicado en `WORK.txt`) en formato Beamer.
 
 - Comprender y analizar el documento para armar la presentación
-- La presentación debe estar estructurada (introducción, desarrollo,
-  conclusiones)
 - Establecer las secciones que se van a usar en la presentación.
 - Debe incluir la siguiente información:
     - Título del trabajo: Debe ser un título llamativo
@@ -13,35 +11,18 @@ Presentar el siguiente trabajo (ubicado en `WORK.txt`) en formato Beamer.
     - Incluir imágenes donde sea conveniente en la presentación.
     - Las imágenes deben ser referenciales y simples, no incluir diagramas
       complejos.
-    - Poner las imágenes en una diapositiva aparte para evitar overflows.
-    - Autores: Espinoza H., Diego A.; Linares R., Ander R.
-    - Universidad: Universidad Nacional Mayor de San Marcos
-    - Grupo: Grupo 10
-    - Curso: Redes, Arquitectura y Comunicaciones
-- Se debe incluir la bibliografía usada (las seis fuentes más importantes) en
-  la sección de Referencias.
+    - Considerar la información de los autores, universidad, grupo, etc.
+- Se debe incluir la bibliografía usada (las nueve fuentes más importantes) en
+  la sección de Referencias. Incluir un enlace a las referencias.
 - Definir el header del documento, con los paquetes y estílos que se van a
   usar.
-- Incluir lo siguiente en el header para los estilos
+- Incluir lo siguiente en el header
 
     ```latex
-    \usetheme{Madrid}
-    \usepackage{ShanghaiTech}
+    \usepackage[utf8]{inputenc}
     ```
 
 - Incluir una diapositiva de despedida
-
-    ```latex
-    \begin{frame}
-        \vfill
-        \centering
-        \LARGE\textbf{Thank You!}\\[1em]
-        \large Thanks for your attendance.
-        \vfill
-        \includegraphics[width=0.5\textwidth]{img/dog.png} 
-        \vfill
-    \end{frame}
-    ```
 
 - Usar el patrón de nombres breves y nombres detallados para las secciones en
   el documeto `\section[nombre breve]{nombre detallado}`
@@ -57,11 +38,14 @@ Presentar el siguiente trabajo (ubicado en `WORK.txt`) en formato Beamer.
   comillas dobles (") en el código fuente del documento.
 - Asegurarse de que se usen caracteres UTF-8 válidos para Latex. Tener cuidado
   con la herramienta `write_file` y las secuencias de escape Unicode.
+- Asegurarse de no insertar triple comillas (''') o (```) al inicio y al final
+  de un documento al momento de generar código Latex.
 - Tomar en cuenta el renderizado de los caracteres del lenguaje Español.
   Incluir paquetes si es necesario.
 - La herramienta ImageMagick está disponible para edición de imágenes.
 - Usar la extensión de Nano Banana para la generación de imágenes.
-- Usar el Makefile (`make`) para construir el documento.
+- Usar el Makefile proporcionado (`make`) para construir el documento.
+- No modificar los archivos `Dockerfile`, `Makefile` proporcionados.
 - Intentar corregir los errores de overflow, para garantizar un renderizado
   correcto. Por ejemplo, reducir el tamaño de las imágenes, separar el
   contenido en más diapositivas, etc. No es necesario corregir todos los

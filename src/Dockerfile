@@ -51,7 +51,7 @@ WORKDIR /home/runner/src
 
 # Install dev-time local dependencies as the non-root user
 # This now works because the user owns the global install directories
-RUN npm install -g @google/gemini-cli
+RUN npm i -g @google/gemini-cli
 
 # Install dev-time project dependencies
 # (No dependencies listed in the original file)
