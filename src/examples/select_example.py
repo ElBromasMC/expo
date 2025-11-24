@@ -79,8 +79,9 @@ def run_tui(default_threads: int) -> None:
 
   while True:
     clear()
+    zpath = zig_path()
     print("=== Ejemplos de paralelismo ===")
-    print(f"Zig: {ZIG}")
+    print(f"Zig: {zpath}")
     print(f"Venv Python: {VENV}")
     print("-------------------------------")
     for key, (label, _) in options.items():
