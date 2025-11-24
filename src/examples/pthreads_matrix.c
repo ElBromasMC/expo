@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-#define N 200
+#define N 700
 #define NUM_THREADS 4
 
 typedef struct {
@@ -63,10 +63,17 @@ int main(void) {
   pthread_t threads[NUM_THREADS];
   thread_data_t td[NUM_THREADS];
 
+  printf("Ejemplo Pthreads: multiplicacion %dx%d (baseline secuencial vs paralela con %d hilos)\n",
+         N, N, NUM_THREADS);
+  printf("1) Llenamos matrices con valores sencillos para evitar sesgos de memoria.\n");
+  printf("2) Medimos el tiempo secuencial: representa el techo sin paralelismo.\n");
+  printf("3) Medimos el tiempo paralelo: dividimos filas entre hilos para explotar el paralelismo de datos.\n\n");
+
   fill_matrices();
 
   struct timespec t0, t1, t2;
   clock_gettime(CLOCK_MONOTONIC, &t0);
+  printf("Ejecutando version secuencial...\n");
   multiply_sequential();
   clock_gettime(CLOCK_MONOTONIC, &t1);
 
@@ -88,7 +95,8 @@ int main(void) {
   }
   clock_gettime(CLOCK_MONOTONIC, &t2);
 
-  printf("\nResumen:\n");
+  printf("\nResumen (multiplicacion %dx%d con Pthreads: distribucion por filas):\n",
+         N, N);
   printf("  Secuencial: %.3f s  (C_seq[0][0]=%.1f)\n", seconds_since(t0, t1),
          C_seq[0][0]);
   printf("  Paralelo:   %.3f s  (C_par[0][0]=%.1f)\n", seconds_since(t1, t2),

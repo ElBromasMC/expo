@@ -12,10 +12,12 @@ def fake_io(name: str, delay: float, t0: float) -> None:
 
 def main() -> None:
     tareas = [
-        ("conexion-db", 1.0),
-        ("descarga-api", 1.2),
-        ("lectura-disco", 0.8),
+        ("conexion-db", 2.5),
+        ("descarga-api", 3.0),
+        ("lectura-disco", 2.0),
     ]
+    print("Threading E/S: simulamos 3 tareas I/O que se solapan (total ~3s vs ~7.5s en serie)")
+    print("En CPU-bound no da speedup por el GIL, pero en I/O sí porque los hilos se alternan mientras esperan.")
     hilos = []
     t0 = time.perf_counter()
     for nombre, espera in tareas:

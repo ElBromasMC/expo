@@ -6,7 +6,7 @@ from multiprocessing import Pool, cpu_count
 
 def cpu_task(n: int) -> tuple[int, float]:
     # Carga CPU: raíz cuadrada sobre un rango grande
-    acc = sum(math.sqrt(i + n) for i in range(300_000))
+    acc = sum(math.sqrt(i + n) for i in range(3_000_000))
     return n, acc
 
 
@@ -14,7 +14,12 @@ def main() -> None:
     if hasattr(sys, "set_int_max_str_digits"):
         sys.set_int_max_str_digits(0)
 
-    datos = list(range(8))
+    datos = list(range(16))
+
+    print("Ejemplo multiprocessing (evita GIL para CPU-bound con procesos)")
+    print(f"Multiprocessing: {len(datos)} tareas, carga sqrt(3M) cada una")
+    print("1) Ejecutamos secuencial para medir el baseline.")
+    print("2) Ejecutamos en paralelo usando Pool.map para repartir tareas.\n")
 
     start = time.perf_counter()
     seq = [cpu_task(x) for x in datos]

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define N 200
+#define N 700
 
 static double A[N][N];
 static double B[N][N];
@@ -45,7 +45,15 @@ static void multiply_parallel(void) {
 }
 
 int main(void) {
+  printf("Ejemplo OpenMP: multiplicacion %dx%d (fork-join automatizado)\n", N, N);
+  printf("1) Llenamos matrices en paralelo con collapse(2).\n");
+  printf("2) Medimos baseline secuencial (sin directivas).\n");
+  printf("3) Medimos paralelismo con #pragma omp parallel for (planificacion estatica).\n");
+  printf("4) Comparamos speedup para visualizar el beneficio de paralelizar bucles regulares.\n\n");
   fill_matrices();
+
+  printf("Multiplicacion %dx%d con OpenMP (omp_get_max_threads=%d)\n", N, N,
+         omp_get_max_threads());
 
   double t0 = omp_get_wtime();
   multiply_sequential();

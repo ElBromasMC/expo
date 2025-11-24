@@ -5,12 +5,17 @@ import time
 
 def procesar_imagen_stub(image_id: int) -> str:
     # Carga CPU artificial para ilustrar paralelismo
-    _ = sum(math.sqrt(i) for i in range(800_000))
+    _ = sum(math.sqrt(i) for i in range(5_000_000))
     return f'Imagen {image_id} lista'
 
 
 def main() -> None:
-    ids = list(range(8))
+    ids = list(range(12))
+
+    print("Ejemplo Joblib: paralelizar funciones CPU-bound con backend de procesos")
+    print(f"Joblib: {len(ids)} tareas con carga sqrt(5M) cada una")
+    print("1) Ejecutamos secuencial para medir baseline.")
+    print("2) Ejecutamos en paralelo con Parallel/processes (evita GIL).\n")
 
     start = time.perf_counter()
     secuencial = [procesar_imagen_stub(i) for i in ids]
