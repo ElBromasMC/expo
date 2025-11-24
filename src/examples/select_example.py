@@ -59,11 +59,13 @@ def run_python_script(script: str) -> None:
 
 def run_tui(default_threads: int) -> None:
   options = {
-    "1": ("C (pthreads) con Zig build", lambda: run_zig_target("pthreads")),
-    "2": ("C (OpenMP) con Zig build", lambda: run_zig_target("openmp", env=_omp_env(default_threads))),
-    "3": ("Python multiprocessing", lambda: run_python_script("multiprocessing_pool.py")),
-    "4": ("Python threading (E/S)", lambda: run_python_script("threading_io.py")),
-    "5": ("Python Joblib", lambda: run_python_script("joblib_parallel.py")),
+    "1": ("Build C (pthreads)", lambda: run_zig_target("pthreads")),
+    "2": ("Run C (pthreads)", lambda: run_zig_target("run-pthreads")),
+    "3": ("Build C (OpenMP)", lambda: run_zig_target("openmp")),
+    "4": ("Run C (OpenMP)", lambda: run_zig_target("run-openmp", env=_omp_env(default_threads))),
+    "5": ("Python multiprocessing", lambda: run_python_script("multiprocessing_pool.py")),
+    "6": ("Python threading (E/S)", lambda: run_python_script("threading_io.py")),
+    "7": ("Python Joblib", lambda: run_python_script("joblib_parallel.py")),
     "a": ("Todos", lambda: run_all(default_threads)),
     "q": ("Salir", None),
   }
@@ -90,7 +92,9 @@ def run_tui(default_threads: int) -> None:
 
 def run_all(default_threads: int) -> None:
   run_zig_target("pthreads")
-  run_zig_target("openmp", env=_omp_env(default_threads))
+  run_zig_target("openmp")
+  run_zig_target("run-pthreads")
+  run_zig_target("run-openmp", env=_omp_env(default_threads))
   run_python_script("multiprocessing_pool.py")
   run_python_script("threading_io.py")
   run_python_script("joblib_parallel.py")
@@ -104,15 +108,19 @@ def _omp_env(threads: int) -> dict:
 
 def main() -> None:
   parser = argparse.ArgumentParser(description="Selector interactivo de ejemplos de paralelismo.")
-  parser.add_argument("--example", choices=["pthreads", "openmp", "multiprocessing", "threading", "joblib", "all"], help="Ejecuta directamente un ejemplo sin abrir el TUI.")
+  parser.add_argument("--example", choices=["pthreads", "run-pthreads", "openmp", "run-openmp", "multiprocessing", "threading", "joblib", "all"], help="Ejecuta directamente un ejemplo sin abrir el TUI.")
   parser.add_argument("--threads", type=int, default=4, help="Hilos para OpenMP (usado por zig build).")
   args = parser.parse_args()
 
   if args.example:
     if args.example == "pthreads":
       run_zig_target("pthreads")
+    elif args.example == "run-pthreads":
+      run_zig_target("run-pthreads")
     elif args.example == "openmp":
-      run_zig_target("openmp", env=_omp_env(args.threads))
+      run_zig_target("openmp")
+    elif args.example == "run-openmp":
+      run_zig_target("run-openmp", env=_omp_env(args.threads))
     elif args.example == "multiprocessing":
       run_python_script("multiprocessing_pool.py")
     elif args.example == "threading":

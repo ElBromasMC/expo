@@ -61,16 +61,19 @@ pub fn build(b: *std.Build) void {
         });
         b.installArtifact(pthreads);
 
-        const pthreads_step = b.step("pthreads", "Compila/ejecuta pthreads_matrix");
-        if (target.query.isNative() and !is_windows) {
+        const pthreads_step = b.step("pthreads", "Compila pthreads_matrix");
+        pthreads_step.dependOn(&pthreads.step);
+        pthreads_step.dependOn(b.getInstallStep());
+
+        const run_pthreads_step = b.step("run-pthreads", "Ejecuta pthreads_matrix (solo target nativo)");
+        run_pthreads_step.dependOn(pthreads_step);
+        if (target.query.isNative()) {
             const run_pthreads = b.addRunArtifact(pthreads);
             run_pthreads.step.dependOn(b.getInstallStep());
-            pthreads_step.dependOn(&run_pthreads.step);
-        } else {
-            pthreads_step.dependOn(&pthreads.step);
-            pthreads_step.dependOn(b.getInstallStep());
+            run_pthreads_step.dependOn(&run_pthreads.step);
         }
-        all.dependOn(pthreads_step);
+
+        all.dependOn(run_pthreads_step);
     }
 
     // OpenMP (POSIX y opcionalmente windows-gnu si se suministra runtime).
@@ -118,15 +121,18 @@ pub fn build(b: *std.Build) void {
             b.getInstallStep().dependOn(&gcc_dll.step);
         }
 
-        const openmp_step = b.step("openmp", "Compila/ejecuta openmp_matrix");
-        if (target.query.isNative() and !is_windows) {
+        const openmp_step = b.step("openmp", "Compila openmp_matrix");
+        openmp_step.dependOn(&openmp.step);
+        openmp_step.dependOn(b.getInstallStep());
+
+        const run_openmp_step = b.step("run-openmp", "Ejecuta openmp_matrix (solo target nativo)");
+        run_openmp_step.dependOn(openmp_step);
+        if (target.query.isNative()) {
             const run_openmp = b.addRunArtifact(openmp);
             run_openmp.step.dependOn(b.getInstallStep());
-            openmp_step.dependOn(&run_openmp.step);
-        } else {
-            openmp_step.dependOn(&openmp.step);
-            openmp_step.dependOn(b.getInstallStep());
+            run_openmp_step.dependOn(&run_openmp.step);
         }
-        all.dependOn(openmp_step);
+
+        all.dependOn(run_openmp_step);
     }
 }
