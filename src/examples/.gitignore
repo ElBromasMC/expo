@@ -8,6 +8,5 @@ zig-out/
 venv/
 
 # In general
-bin/
 .env
 
