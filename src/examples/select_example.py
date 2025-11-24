@@ -22,6 +22,15 @@ def python_in_venv() -> Path:
   return candidate if candidate.exists() else Path(sys.executable)
 
 
+def ensure_venv() -> Path:
+  py_venv = python_in_venv()
+  if py_venv.exists():
+    return py_venv
+  creator = Path(sys.executable)
+  subprocess.check_call([str(creator), "-m", "venv", str(VENV)])
+  return python_in_venv()
+
+
 def zig_path() -> Path:
   if os.name == "nt":
     candidate = ZIG_DIR / "zig.exe"
@@ -39,11 +48,9 @@ def ensure_joblib(py: Path) -> None:
   try:
     subprocess.check_call([str(py), "-c", "import joblib"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
   except subprocess.CalledProcessError:
-    print("Falta joblib en el entorno. Instala con:")
-    if os.name == "nt":
-      print(f"  {py} -m pip install joblib")
-    else:
-      print(f"  {py} -m pip install joblib")
+    print("Instalando joblib en el entorno virtual...")
+    subprocess.check_call([str(py), "-m", "pip", "install", "--upgrade", "pip"], stdout=subprocess.DEVNULL)
+    subprocess.check_call([str(py), "-m", "pip", "install", "joblib"])
 
 
 def run_zig_target(target: str, env: dict | None = None) -> None:
@@ -61,8 +68,11 @@ def run_zig_target(target: str, env: dict | None = None) -> None:
 
 def run_python_script(script: str) -> None:
   clear()
-  py = python_in_venv()
-  ensure_joblib(py)
+  if script == "joblib_parallel.py":
+    py = ensure_venv()
+    ensure_joblib(py)
+  else:
+    py = Path(sys.executable)
   run_cmd([str(py), str(ROOT / script)])
 
 
