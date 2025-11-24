@@ -14,21 +14,24 @@ def clear() -> None:
   os.system("cls" if os.name == "nt" else "clear")
 
 
-def python_in_venv() -> Path:
+def python_in_venv() -> Path | None:
   if os.name == "nt":
     candidate = VENV / "Scripts" / "python.exe"
   else:
     candidate = VENV / "bin" / "python"
-  return candidate if candidate.exists() else Path(sys.executable)
+  return candidate if candidate.exists() else None
 
 
 def ensure_venv() -> Path:
   py_venv = python_in_venv()
-  if py_venv.exists():
+  if py_venv is not None:
     return py_venv
   creator = Path(sys.executable)
   subprocess.check_call([str(creator), "-m", "venv", str(VENV)])
-  return python_in_venv()
+  py_venv = python_in_venv()
+  if py_venv is None:
+    raise RuntimeError("No se pudo crear el entorno virtual (.venv). Verifica que python3-venv/ensurepip estén instalados.")
+  return py_venv
 
 
 def zig_path() -> Path:
@@ -50,7 +53,7 @@ def ensure_joblib(py: Path) -> None:
   except subprocess.CalledProcessError:
     print("Instalando joblib en el entorno virtual...")
     subprocess.check_call([str(py), "-m", "pip", "install", "--upgrade", "pip"], stdout=subprocess.DEVNULL)
-    subprocess.check_call([str(py), "-m", "pip", "install", "joblib"])
+    subprocess.check_call([str(py), "-m", "pip", "install", "joblib"], stdout=subprocess.DEVNULL)
 
 
 def run_zig_target(target: str, env: dict | None = None) -> None:
