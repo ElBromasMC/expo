@@ -12,6 +12,8 @@ services:
         target: /home/runner/src
     environment:
       - NANOBANANA_GEMINI_API_KEY=${NANOBANANA_GEMINI_API_KEY}
+    ports:
+      - "1455:1455"
 
 volumes:
   runner-home:

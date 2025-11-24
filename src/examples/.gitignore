@@ -1,0 +1,13 @@
+# Zig
+zig/
+zig-out/
+.zig-cache/
+
+# Python
+.venv/
+venv/
+
+# In general
+bin/
+.env
+

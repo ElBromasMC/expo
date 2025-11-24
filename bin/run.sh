@@ -10,5 +10,5 @@ compose_arguments=(
 )
 
 cd ${PROJECT_ROOT}
-exec ${COMPOSE_PROVIDER} "${compose_arguments[@]}" run --rm --build client
+exec ${COMPOSE_PROVIDER} "${compose_arguments[@]}" run --rm --build --service-ports client
 

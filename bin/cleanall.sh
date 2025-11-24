@@ -9,7 +9,6 @@ make distclean
 rm -rf "./build/"
 rm -rf "./nanobanana-output/"
 rm -rf "./sections/"
-rm -f "./WORK.txt"
 rm -f "./presentation.tex"
 find "./img" ! -name 'dog.png' -type f -exec rm -f {} +
 

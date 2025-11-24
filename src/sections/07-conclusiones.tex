@@ -1,0 +1,18 @@
+\section{Conclusiones}
+
+\begin{frame}{Hallazgos clave}
+  \begin{itemize}
+    \item El paralelismo dejó de ser opcional: la era multinúcleo obliga a dividir el trabajo en hilos o procesos.
+    \item C con Pthreads u OpenMP ofrece control fino y el mayor rendimiento, pero exige disciplina en partición y sincronización.
+    \item Python brilla en productividad; logra paralelismo real con procesos o delegando a librerías nativas que liberan el GIL.
+    \item Elegir la herramienta depende del balance entre latencia objetivo, complejidad aceptable y ritmo de iteración de la solución.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Siguientes pasos sugeridos}
+  \begin{itemize}
+    \item Identificar rutas críticas en proyectos de la Facultad y perfilar su sensibilidad a la latencia.
+    \item Probar versiones híbridas: prototipo en Python, optimizar kernels con OpenMP o Numba.
+    \item Medir impacto de afinidad de hilos en NUMA y ajustar configuraciones de compilador o planificador.
+  \end{itemize}
+\end{frame}

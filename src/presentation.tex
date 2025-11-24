@@ -1,0 +1,65 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{amsmath}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\usetheme{Madrid}
+\setbeamertemplate{navigation symbols}{}%
+\definecolor{codeblue}{RGB}{0,70,140}
+\definecolor{codegray}{RGB}{245,245,245}
+\hypersetup{colorlinks=true, linkcolor=codeblue, urlcolor=codeblue}
+
+\lstset{
+  basicstyle=\scriptsize\ttfamily,
+  keywordstyle=\color{codeblue}\bfseries,
+  commentstyle=\color{gray},
+  stringstyle=\color{codeblue},
+  showstringspaces=false,
+  frame=single,
+  breaklines=true,
+  backgroundcolor=\color{codegray}
+}
+
+\title[Paralelismo en C y Python]{Paralelismo en C y Python: Rendimiento en la Era Post-Dennard}
+\subtitle[Paralelismo C vs. Python]{De Pthreads y OpenMP al multiprocesamiento y Joblib}
+\author[Espinoza H.; Linares R.]{\texorpdfstring{Espinoza H., Diego A. \\ Linares R., Ander R.}{Espinoza H., Diego A.; Linares R., Ander R.}}
+\institute[UNMSM -- Grupo 10]{\texorpdfstring{Universidad Nacional Mayor de San Marcos \\ Grupo 10}{UNMSM -- Grupo 10}}
+\date{2025}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+\end{frame}
+
+\AtBeginSection[]{
+  \begin{frame}{Ruta}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\input{sections/01-introduccion.tex}
+\input{sections/02-taxonomia.tex}
+\input{sections/03-memoria.tex}
+\input{sections/04-c-paralelismo.tex}
+\input{sections/05-python.tex}
+\input{sections/06-comparativa.tex}
+\input{sections/07-conclusiones.tex}
+\input{sections/08-bibliografia.tex}
+\input{sections/09-despedida.tex}
+
+\end{document}
